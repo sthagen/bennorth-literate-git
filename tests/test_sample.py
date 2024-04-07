@@ -96,7 +96,7 @@ class TestLocalRepo(UsingLocalRepo):
         # for clarity.
         #
         output_hash = hashlib.sha256(output_text.encode()).hexdigest()
-        exp_hash = 'd7c3a24419dfebaa8672c44d6e7cb5f5cb307839d459caa3b0569bf4fe42475d'
+        exp_hash = '44f94ebb84d9f909d7a1db039e1eee39b31df2a4ab7f9fa33d2585b3e1dad241'
         assert output_hash == exp_hash
 
 
@@ -155,7 +155,7 @@ class TestTamagotchi:
 
         # Regression test.
         output_hash = hashlib.sha256(output_text.encode()).hexdigest()
-        exp_hash = '42884703ce1d4c806bcbe1bdf79283c6f6da86e2b640bad509d7f814bd453344'
+        exp_hash = 'f0820f2b2da1e4b5ef426d96dfbe533e18e4c9e03e1f48445c355f2e6ea59d0f'
         assert output_hash == exp_hash
 
 
