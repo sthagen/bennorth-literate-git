@@ -5,7 +5,7 @@ description = "Render a structured git history as an interactive web page"
 homepage = "https://github.com/bennorth/literate-git"
 authors = ["Ben North <ben@redfrontdoor.org>"]
 license = "GPLv3"
-readme = "README.md"
+readme = "README-short.md"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
