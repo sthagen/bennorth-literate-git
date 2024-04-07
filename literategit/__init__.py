@@ -28,13 +28,6 @@ import pygments.formatters
 import pygments.util
 
 
-class NakedHtmlFormatter(pygments.formatters.HtmlFormatter):
-    """A HTML formatter that doesn't wrap the lines in a <div>"""
-    def wrap(self, source, outfile):
-        for i, t in source:
-            yield i, t
-
-
 class TemplateSuite:
     def __init__(self, create_url, title, has_results=True):
         """
@@ -153,7 +146,9 @@ class SectionCommit(namedtuple('SectionCommit', 'repo commit children seqnum_pat
 
 
 class Diff(namedtuple('Diff', 'repo tree_1 tree_0')):
-    formatter = NakedHtmlFormatter(linenos=False, wrapcode=True)
+    formatter = pygments.formatters.HtmlFormatter(
+        nowrap=True, linenos=False, wrapcode=True
+    )
     repo_being_cached = None
 
     def as_html_fragment(self, template_suite):
