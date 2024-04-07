@@ -24,6 +24,9 @@ markupsafe = "^2.1.5"
 pygments = "^2.17.2"
 click = "^8.1.7"
 
+[tool.poetry.scripts]
+git-literate-render = "literategit.cli:render"
+git-dump-all-trees = "literategit.cli:dump_all_trees"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.1.1"
