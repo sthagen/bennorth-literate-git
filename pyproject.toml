@@ -2,9 +2,18 @@
 name = "literategit"
 version = "0.4.0"
 description = "Render a structured git history as an interactive web page"
+homepage = "https://github.com/bennorth/literate-git"
 authors = ["Ben North <ben@redfrontdoor.org>"]
 license = "GPLv3"
 readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Development Status :: 4 - Beta",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education"
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
