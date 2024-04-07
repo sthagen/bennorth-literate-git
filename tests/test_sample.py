@@ -22,7 +22,7 @@ import pytest
 import hashlib
 from pathlib import Path
 
-import literategit.cli
+from literategit.cli.render import render_
 import literategit.dump_all_trees
 
 
@@ -69,12 +69,10 @@ def maybe_dump(fname_prefix, text):
 class UsingLocalRepo:
     def rendered_output(self, local_repo, create_url):
         args = ['My cool project', 'start', 'sample-history-for-tests',
-                create_url]
+                create_url, True]
 
         output_list = []
-        literategit.cli.render(_argv=args,
-                               _path=local_repo.path,
-                               _print=output_list.append)
+        render_(*args, _path=local_repo.path, _print=output_list.append)
 
         assert len(output_list) == 1
         output_text = output_list[0]
@@ -134,11 +132,9 @@ class TestTamagotchi:
         This is fragile in that it relies on the exact state of the 'Tamagotchi'-style
         webapp repo, but it does at least check all the parts fit together.
         """
-        args = ['My cool project', 'start', 'for-rendering', 'literategit.example_create_url.CreateUrl']
+        args = ['My cool project', 'start', 'for-rendering', 'literategit.example_create_url.CreateUrl', True]
         output_list = []
-        literategit.cli.render(_argv=args,
-                               _path=tamagotchi_repo.path,
-                               _print=output_list.append)
+        render_(*args, _path=tamagotchi_repo.path, _print=output_list.append)
 
         assert len(output_list) == 1
         output_text = output_list[0]
