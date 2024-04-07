@@ -67,6 +67,7 @@ def render_(
 
 
 @click.command
+@click.version_option(__version__)
 @click.argument("title")
 @click.argument("begin_commit")
 @click.argument("end_commit")

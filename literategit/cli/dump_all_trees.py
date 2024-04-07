@@ -23,6 +23,7 @@ from literategit.cli.repo_for_path import repo_for_path
 
 
 @click.command
+@click.version_option(__version__)
 @click.argument("output_root")
 @click.argument("rev1")
 @click.argument("rev2")
