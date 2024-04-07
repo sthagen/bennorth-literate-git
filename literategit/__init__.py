@@ -1,4 +1,4 @@
-# Copyright (C) 2016, 2019 Ben North and others; see COPYING
+# Copyright (C) 2016, 2019, 2024 Ben North and others; see COPYING
 #
 # This file is part of literate-git tools --- render a literate git repository
 #
