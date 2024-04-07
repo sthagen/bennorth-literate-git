@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "literategit"
+version = "0.4.0"
+description = "Render a structured git history as an interactive web page"
+authors = ["Ben North <ben@redfrontdoor.org>"]
+license = "GPLv3"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
