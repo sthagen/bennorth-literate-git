@@ -2,7 +2,7 @@
 
 Tool to render a hierarchical `git` history into HTML.
 
-[![Build Status](https://travis-ci.org/bennorth/literate-git.svg?branch=develop)](https://travis-ci.org/bennorth/literate-git)
+[![Build Status](https://github.com/bennorth/literate-git/actions/workflows/python-package.yml/badge.svg)](https://github.com/bennorth/literate-git/actions/workflows/python-package.yml)
 
 
 ## Motivation: Literate Programming
