@@ -309,7 +309,7 @@ poetry run pytest tests
 
 ---
 
-This README: Copyright 2016&ndash;2021 Ben North; licensed under
+This README: Copyright 2016&ndash;2024 Ben North; licensed under
 [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/)
 
 See the file `COPYING` for full licensing details.
