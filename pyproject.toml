@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "literategit"
-version = "0.4.0"
+version = "0.4.5"
 description = "Render a structured git history as an interactive web page"
 homepage = "https://github.com/bennorth/literate-git"
 authors = ["Ben North <ben@redfrontdoor.org>"]
