@@ -7,4 +7,6 @@ page allows the reader to page through the sections, expanding and
 collapsing them as they wish to see more or less detail.
 
 See [the project homepage](https://github.com/bennorth/literate-git)
-for more information and a demo.
+for [more
+information](https://github.com/bennorth/literate-git/blob/develop/README.md)
+and a demo.
