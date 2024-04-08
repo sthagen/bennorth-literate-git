@@ -2,7 +2,7 @@
 
 Tool to render a hierarchical `git` history into HTML.
 
-[![Build Status](https://travis-ci.org/bennorth/literate-git.svg?branch=develop)](https://travis-ci.org/bennorth/literate-git)
+[![Build Status](https://github.com/bennorth/literate-git/actions/workflows/python-package.yml/badge.svg)](https://github.com/bennorth/literate-git/actions/workflows/python-package.yml)
 
 
 ## Motivation: Literate Programming
@@ -274,6 +274,37 @@ it could be optional.
 
 It would be useful if the rendered result supported URLs going directly
 to some particular section, in a chosen state (collapsed or expanded).
+
+
+## Development set-up
+
+This project uses [Poetry](https://python-poetry.org/).  After
+cloning, you should be able to run:
+
+``` bash
+poetry install
+```
+
+to install the required dependencies.
+
+To run the tests, you need to create branches corresponding to the
+repo branches used for test data:
+
+``` bash
+for b in \
+  initial-empty-state \
+  sample-history-for-tests \
+  test-point-without-docs
+do
+  git branch "$b" origin/"$b"
+done
+```
+
+You should now be able to run the tests:
+
+``` bash
+poetry run pytest tests
+```
 
 
 ---

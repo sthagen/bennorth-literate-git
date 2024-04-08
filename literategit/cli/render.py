@@ -1,4 +1,4 @@
-# Copyright (C) 2016, 2019 Ben North and others; see COPYING
+# Copyright (C) 2016, 2019, 2024 Ben North and others; see COPYING
 #
 # This file is part of literate-git tools --- render a literate git repository
 #
@@ -15,54 +15,45 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""git-literate-render
-
-Usage:
-  git-literate-render (-h | --help)
-  git-literate-render --version
-  git-literate-render <title> <begin-commit> <end-commit> <create-url> [--no-results]
-
-Options:
-  -h --help     Show this help info
-  --version     Display version info and exit
-  --no-results  Don't add a results link to each commit
-
-Write, to stdout, an HTML representation of the repo history starting
-from (but excluding) <begin-commit> and ending, inclusively, with
-<end-commit>.
-
-The <create-url> argument should be in the form
-
-    possibly.nested.package.object
-
-where 'object' within the importable 'possibly.nested.package' should
-have callable attributes 'result_url' and 'source_url'.  For example,
-'object' can be a class with the given 'staticmethod's.  For more
-details see the code (TemplateSuite).
-
-The <title> argument provides the contents of the <title> and <h1>
-elements in the rendered output.
-"""
-
 import os
 import importlib
-import docopt
+import click
 import literategit
 from literategit._version import __version__
 from literategit.cli.repo_for_path import repo_for_path
 
 
-def render(_argv=None, _path=None, _print=print):
-    args = docopt.docopt(__doc__, argv=_argv,
-                         version='git-literate-render {}'.format(__version__))
+def render_(
+    title, begin_commit, end_commit, create_url, results,
+    *,
+    _path=None,
+    _print=print,
+):
+    """
+    Write, to stdout, an HTML representation of the repo history starting
+    from (but excluding) BEGIN_COMMIT and ending, inclusively, with
+    END_COMMIT.
+
+    The CREATE_URL argument should be in the form
+
+        possibly.nested.package.object
+
+    where 'object' within the importable 'possibly.nested.package' should
+    have callable attributes 'result_url' and 'source_url'.  For example,
+    'object' can be a class with the given 'staticmethod's.  For more
+    details see the code (TemplateSuite).
+
+    The TITLE argument provides the contents of the <title> and <h1>
+    elements in the rendered output.
+    """
     repo_path = _path or os.getcwd()
     repo = repo_for_path(repo_path)
 
     sections = literategit.list_from_range(repo,
-                                           args['<begin-commit>'],
-                                           args['<end-commit>'])
+                                           begin_commit,
+                                           end_commit)
 
-    import_name, obj_name = args['<create-url>'].rsplit('.', 1)
+    import_name, obj_name = create_url.rsplit('.', 1)
     try:
         create_url_module = importlib.import_module(import_name)
     except ImportError:
@@ -72,4 +63,21 @@ def render(_argv=None, _path=None, _print=print):
 
     create_url = getattr(create_url_module, obj_name)
 
-    _print(literategit.render(sections, create_url, args['<title>'], not args['--no-results']))
+    _print(literategit.render(sections, create_url, title, results))
+
+
+@click.command
+@click.version_option(__version__)
+@click.argument("title")
+@click.argument("begin_commit")
+@click.argument("end_commit")
+@click.argument("create_url")
+@click.option(
+    "--results/--no-results",
+    default=True,
+    help="whether to include 'results' links in output (default yes)"
+)
+def render(
+    title, begin_commit, end_commit, create_url, results,
+):
+    render_(title, begin_commit, end_commit, create_url, results)

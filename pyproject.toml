@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "literategit"
+version = "0.4.5"
+description = "Render a structured git history as an interactive web page"
+homepage = "https://github.com/bennorth/literate-git"
+authors = ["Ben North <ben@redfrontdoor.org>"]
+license = "GPLv3"
+readme = "README-short.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Development Status :: 4 - Beta",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education"
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pygit2 = "^1.14.1"
+markdown2 = "^2.4.13"
+jinja2 = "^3.1.3"
+markupsafe = "^2.1.5"
+pygments = "^2.17.2"
+click = "^8.1.7"
+
+[tool.poetry.scripts]
+git-literate-render = "literategit.cli:render"
+git-dump-all-trees = "literategit.cli:dump_all_trees"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1.1"
+beautifulsoup4 = "^4.12.3"
+flake8 = "^7.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

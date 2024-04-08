@@ -1,4 +1,4 @@
-# Copyright (C) 2016, 2019 Ben North and others; see COPYING
+# Copyright (C) 2016, 2019, 2024 Ben North and others; see COPYING
 #
 # This file is part of literate-git tools --- render a literate git repository
 #
@@ -21,17 +21,11 @@ import functools
 import pygit2 as git
 from collections import namedtuple
 import jinja2
+import markupsafe
 import pygments
 import pygments.lexers
 import pygments.formatters
 import pygments.util
-
-
-class NakedHtmlFormatter(pygments.formatters.HtmlFormatter):
-    """A HTML formatter that doesn't wrap the lines in a <div>"""
-    def wrap(self, source, outfile):
-        for i, t in source:
-            yield i, t
 
 
 class TemplateSuite:
@@ -75,12 +69,13 @@ class TemplateSuite:
 
     @staticmethod
     def markdown(source_text):
-        return jinja2.Markup(markdown2.markdown(source_text,
-                                                extras=['fenced-code-blocks']))
+        return markupsafe.Markup(
+            markdown2.markdown(source_text, extras=['fenced-code-blocks'])
+        )
 
     @staticmethod
     def markdown_inner_only(source_text):
-        full_markdown = jinja2.Markup(markdown2.markdown(source_text)).rstrip()
+        full_markdown = markupsafe.Markup(markdown2.markdown(source_text)).rstrip()
 
         outermost_is_p = (full_markdown.startswith('<p>')
                           and full_markdown.endswith('</p>'))
@@ -151,7 +146,9 @@ class SectionCommit(namedtuple('SectionCommit', 'repo commit children seqnum_pat
 
 
 class Diff(namedtuple('Diff', 'repo tree_1 tree_0')):
-    formatter = NakedHtmlFormatter(linenos=False, wrapcode=True)
+    formatter = pygments.formatters.HtmlFormatter(
+        nowrap=True, linenos=False, wrapcode=True
+    )
     repo_being_cached = None
 
     def as_html_fragment(self, template_suite):

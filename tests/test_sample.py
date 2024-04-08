@@ -1,4 +1,4 @@
-# Copyright (C) 2016 Ben North
+# Copyright (C) 2016, 2024 Ben North
 #
 # This file is part of literate-git tools --- render a literate git repository
 #
@@ -22,7 +22,7 @@ import pytest
 import hashlib
 from pathlib import Path
 
-import literategit.cli
+from literategit.cli.render import render_
 import literategit.dump_all_trees
 
 
@@ -69,12 +69,10 @@ def maybe_dump(fname_prefix, text):
 class UsingLocalRepo:
     def rendered_output(self, local_repo, create_url):
         args = ['My cool project', 'start', 'sample-history-for-tests',
-                create_url]
+                create_url, True]
 
         output_list = []
-        literategit.cli.render(_argv=args,
-                               _path=local_repo.path,
-                               _print=output_list.append)
+        render_(*args, _path=local_repo.path, _print=output_list.append)
 
         assert len(output_list) == 1
         output_text = output_list[0]
@@ -98,7 +96,7 @@ class TestLocalRepo(UsingLocalRepo):
         # for clarity.
         #
         output_hash = hashlib.sha256(output_text.encode()).hexdigest()
-        exp_hash = 'd7c3a24419dfebaa8672c44d6e7cb5f5cb307839d459caa3b0569bf4fe42475d'
+        exp_hash = '44f94ebb84d9f909d7a1db039e1eee39b31df2a4ab7f9fa33d2585b3e1dad241'
         assert output_hash == exp_hash
 
 
@@ -134,11 +132,9 @@ class TestTamagotchi:
         This is fragile in that it relies on the exact state of the 'Tamagotchi'-style
         webapp repo, but it does at least check all the parts fit together.
         """
-        args = ['My cool project', 'start', 'for-rendering', 'literategit.example_create_url.CreateUrl']
+        args = ['My cool project', 'start', 'for-rendering', 'literategit.example_create_url.CreateUrl', True]
         output_list = []
-        literategit.cli.render(_argv=args,
-                               _path=tamagotchi_repo.path,
-                               _print=output_list.append)
+        render_(*args, _path=tamagotchi_repo.path, _print=output_list.append)
 
         assert len(output_list) == 1
         output_text = output_list[0]
@@ -159,7 +155,7 @@ class TestTamagotchi:
 
         # Regression test.
         output_hash = hashlib.sha256(output_text.encode()).hexdigest()
-        exp_hash = '42884703ce1d4c806bcbe1bdf79283c6f6da86e2b640bad509d7f814bd453344'
+        exp_hash = 'f0820f2b2da1e4b5ef426d96dfbe533e18e4c9e03e1f48445c355f2e6ea59d0f'
         assert output_hash == exp_hash
 
 
