@@ -116,7 +116,7 @@ class Node:
 
     @property
     def diff(self):
-        return Diff(self.repo, self.commit.tree.oid, self.commit.parents[0].tree.oid)
+        return Diff(self.repo, self.commit.tree.id, self.commit.parents[0].tree.id)
 
 
 class LeafCommit(namedtuple('LeafCommit', 'repo commit seqnum_path'), Node):
@@ -186,7 +186,7 @@ class Diff(namedtuple('Diff', 'repo tree_1 tree_0')):
             obj = repo[entry.id]
             if obj.type == git_enums.ObjectType.TREE:
                 highlights.update(
-                    Diff.highlighted_tree_contents(repo, obj.oid, prefix + entry.name + '/'))
+                    Diff.highlighted_tree_contents(repo, obj.id, prefix + entry.name + '/'))
             elif obj.type != git_enums.ObjectType.BLOB:
                 raise ValueError('expecting only TREEs or BLOBs; got {}'
                                  .format(obj.type))

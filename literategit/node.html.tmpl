@@ -1,4 +1,4 @@
-<div class="literate-git-node" data-commit-sha1="{{ node.commit.oid }}">
+<div class="literate-git-node" data-commit-sha1="{{ node.commit.id }}">
 {% if node.seqnum_path | length == 1 %}
   <h2 class="nav prev">&lt;</h2>
   <h2 class="nav next">&gt;</h2>
@@ -11,10 +11,10 @@
 <p class="links">
 {%- if has_results %}
   <a target="LiterateGitResult"
-     href="{{ node.commit.oid | result_url | e }}"><span>RESULT</span></a>
+     href="{{ node.commit.id | result_url | e }}"><span>RESULT</span></a>
 {%- endif %}
   <a target="LiterateGitSource"
-     href="{{ node.commit.oid | source_url | e }}"><span>SOURCE</span></a>
+     href="{{ node.commit.id | source_url | e }}"><span>SOURCE</span></a>
 </p>
 
 <div class="diff-or-children">

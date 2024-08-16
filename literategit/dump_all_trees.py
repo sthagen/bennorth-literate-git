@@ -80,10 +80,10 @@ class LinkTrees:
     def create_all(self, tree_oid):
         for entry in self.repo[tree_oid]:
             if entry.type == pygit2.enums.ObjectType.BLOB:
-                blob_filename = self.write_blobs.ensure_exists(entry.oid)
+                blob_filename = self.write_blobs.ensure_exists(entry.id)
                 os.link(blob_filename, os.path.join(self.outdir, entry.name))
             elif entry.type == pygit2.enums.ObjectType.TREE:
-                self.new_nested(entry.name).create_all(entry.oid)
+                self.new_nested(entry.name).create_all(entry.id)
             else:
                 raise ValueError('unhandled type "{}"'.format(entry.type))
 
