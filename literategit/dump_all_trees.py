@@ -46,8 +46,8 @@ class WriteBlobs:
         mkdir_excl(outdir)
 
     def ensure_exists(self, blob_oid):
-        out_path_dirname = blob_oid.hex[:2]
-        out_path_basename = blob_oid.hex[2:]
+        out_path_dirname = str(blob_oid)[:2]
+        out_path_basename = str(blob_oid)[2:]
         full_dirname = os.path.join(self.outdir, out_path_dirname)
         full_filename = os.path.join(full_dirname, out_path_basename)
         if blob_oid not in self.blobs:
@@ -73,7 +73,7 @@ class LinkTrees:
                               os.path.join(self.outdir, dirname))
 
     def new_nested_for_commit(self, commit):
-        sha1 = commit.id.hex
+        sha1 = str(commit.id)
         dirname = os.path.join(sha1[:2], sha1[2:])
         return self.new_nested(dirname)
 
