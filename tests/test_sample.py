@@ -48,7 +48,7 @@ def maybe_dump(fname_prefix, text):
     that the output used in the regression tests be dumped to files.
     For example,
 
-        LITGIT_TEST_DUMP_FNAME_SUFFIX="-new.txt" python setup.py test
+        LITGIT_TEST_DUMP_FNAME_SUFFIX="-new.txt" poetry run pytest tests
 
     will generate files
 
