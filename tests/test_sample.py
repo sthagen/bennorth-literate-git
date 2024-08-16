@@ -48,7 +48,7 @@ def maybe_dump(fname_prefix, text):
     that the output used in the regression tests be dumped to files.
     For example,
 
-        LITGIT_TEST_DUMP_FNAME_SUFFIX="-new.txt" python setup.py test
+        LITGIT_TEST_DUMP_FNAME_SUFFIX="-new.txt" poetry run pytest tests
 
     will generate files
 
@@ -148,7 +148,7 @@ class TestTamagotchi:
         exp_commits = literategit.dump_all_trees.collect_commits(tamagotchi_repo,
                                                                  'start',
                                                                  'for-rendering')
-        exp_sha1s = sorted(c.hex for c in exp_commits)
+        exp_sha1s = sorted(str(c.id) for c in exp_commits)
 
         assert got_sha1s == exp_sha1s
         assert len(got_sha1s) == 162  # More fragility

@@ -17,6 +17,7 @@
 
 import os
 import pygit2
+import pygit2.enums
 
 
 def collect_commits(repo, rev1, rev2):
@@ -45,8 +46,8 @@ class WriteBlobs:
         mkdir_excl(outdir)
 
     def ensure_exists(self, blob_oid):
-        out_path_dirname = blob_oid.hex[:2]
-        out_path_basename = blob_oid.hex[2:]
+        out_path_dirname = str(blob_oid)[:2]
+        out_path_basename = str(blob_oid)[2:]
         full_dirname = os.path.join(self.outdir, out_path_dirname)
         full_filename = os.path.join(full_dirname, out_path_basename)
         if blob_oid not in self.blobs:
@@ -72,17 +73,17 @@ class LinkTrees:
                               os.path.join(self.outdir, dirname))
 
     def new_nested_for_commit(self, commit):
-        sha1 = commit.id.hex
+        sha1 = str(commit.id)
         dirname = os.path.join(sha1[:2], sha1[2:])
         return self.new_nested(dirname)
 
     def create_all(self, tree_oid):
         for entry in self.repo[tree_oid]:
-            if entry.type == pygit2.GIT_OBJ_BLOB:
-                blob_filename = self.write_blobs.ensure_exists(entry.oid)
+            if entry.type == pygit2.enums.ObjectType.BLOB:
+                blob_filename = self.write_blobs.ensure_exists(entry.id)
                 os.link(blob_filename, os.path.join(self.outdir, entry.name))
-            elif entry.type == pygit2.GIT_OBJ_TREE:
-                self.new_nested(entry.name).create_all(entry.oid)
+            elif entry.type == pygit2.enums.ObjectType.TREE:
+                self.new_nested(entry.name).create_all(entry.id)
             else:
                 raise ValueError('unhandled type "{}"'.format(entry.type))
 
