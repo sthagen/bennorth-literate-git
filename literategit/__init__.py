@@ -19,6 +19,7 @@ import markdown2
 import os
 import functools
 import pygit2 as git
+import pygit2.enums as git_enums
 from collections import namedtuple
 import jinja2
 import markupsafe
@@ -183,10 +184,10 @@ class Diff(namedtuple('Diff', 'repo tree_1 tree_0')):
         highlights = {}
         for entry in repo[tree]:
             obj = repo[entry.id]
-            if obj.type == git.GIT_OBJ_TREE:
+            if obj.type == git_enums.ObjectType.TREE:
                 highlights.update(
                     Diff.highlighted_tree_contents(repo, obj.oid, prefix + entry.name + '/'))
-            elif obj.type != git.GIT_OBJ_BLOB:
+            elif obj.type != git_enums.ObjectType.BLOB:
                 raise ValueError('expecting only TREEs or BLOBs; got {}'
                                  .format(obj.type))
             else:

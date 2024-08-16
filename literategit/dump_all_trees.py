@@ -17,6 +17,7 @@
 
 import os
 import pygit2
+import pygit2.enums
 
 
 def collect_commits(repo, rev1, rev2):
@@ -78,10 +79,10 @@ class LinkTrees:
 
     def create_all(self, tree_oid):
         for entry in self.repo[tree_oid]:
-            if entry.type == pygit2.GIT_OBJ_BLOB:
+            if entry.type == pygit2.enums.ObjectType.BLOB:
                 blob_filename = self.write_blobs.ensure_exists(entry.oid)
                 os.link(blob_filename, os.path.join(self.outdir, entry.name))
-            elif entry.type == pygit2.GIT_OBJ_TREE:
+            elif entry.type == pygit2.enums.ObjectType.TREE:
                 self.new_nested(entry.name).create_all(entry.oid)
             else:
                 raise ValueError('unhandled type "{}"'.format(entry.type))
