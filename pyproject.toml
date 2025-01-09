@@ -17,6 +17,10 @@ dependencies = [
     "click (>=8.1.8,<9.0.0)"
 ]
 
+[project.scripts]
+git-literate-render = "literategit.cli:render"
+git-dump-all-trees = "literategit.cli:dump_all_trees"
+
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
